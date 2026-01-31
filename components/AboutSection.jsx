@@ -6,7 +6,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="section-container relative"
+      className="section-container relative flex flex-col"
       style={{
         background: "linear-gradient(135deg, #475569 0%, #334155 30%, #1e293b 70%, #0f172a 100%)",
         minHeight: "100vh",
@@ -49,29 +49,34 @@ export default function AboutSection() {
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent animate-pulse"></div>
         <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"></div>
       </div>
-      <div className="container">
-        <h2 className="font-bold text-center mb-16 responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>
-        Maker. Mentor. Mess-up Expert
-        </h2>
-        <div className="responsive-grid lg:grid-cols-2 items-start" style={{gap: 'clamp(2rem, 5vw, 5rem)'}}>
-          <div className="space-y-16">
+      <div className="container flex-1 flex flex-col">
+        <div className="my-auto">
+          <h2 className="font-bold text-center mb-16 responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>
+          Maker. Mentor. Mess-up Expert
+          </h2>
+          <div className="responsive-grid lg:grid-cols-2 items-stretch" style={{gap: 'clamp(2rem, 5vw, 5rem)'}}>
             <div className="space-y-16">
-                <p className="leading-relaxed font-bold responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
-                  Hi — I'm Anurag. Curious maker, coffee-lover, and someone who prefers figuring things out with my hands (and a little chaos).
-                </p>
-                
-                <p className="leading-relaxed responsive-text" style={{ color: "#f1f5f9", fontSize: 'clamp(1.125rem, 3vw, 1.875rem)' }}>
-                  I love turning rough sketches into working prototypes, running beginner-friendly workshops, and helping friends debug — the messy, hands-on part is my favorite. Outside the lab I recharge with good coffee, a quick workout, and decent sleep — it keeps me curious and calm.
-                </p>
-                
-                <p className="leading-relaxed responsive-text" style={{ color: "#f1f5f9", fontSize: 'clamp(1.125rem, 3vw, 1.875rem)' }}>
-                  Got a weird idea or want to trade failure stories over coffee? I'm in.
-                </p>
+              <div className="space-y-16">
+                  <p className="leading-relaxed font-bold responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
+                    Hi — I'm Anurag. Curious maker, coffee-lover, and someone who prefers figuring things out with my hands (and a little chaos).
+                  </p>
+                  
+                  <p className="leading-relaxed responsive-text" style={{ color: "#f1f5f9", fontSize: 'clamp(1.125rem, 3vw, 1.875rem)' }}>
+                    I'm currently pursuing a BESc in Mechatronics and Artificial Intelligence Systems Engineering (Dual Degree) at the University of Western Ontario (Cumulative GPA: 3.9).
+                  </p>
+                  
+                  <p className="leading-relaxed responsive-text" style={{ color: "#f1f5f9", fontSize: 'clamp(1.125rem, 3vw, 1.875rem)' }}>
+                    I love turning rough sketches into working prototypes, running beginner-friendly workshops, and helping friends debug — the messy, hands-on part is my favorite. Outside the lab I recharge with good coffee, a quick workout, and decent sleep — it keeps me curious and calm.
+                  </p>
+                  
+                  <p className="leading-relaxed responsive-text" style={{ color: "#f1f5f9", fontSize: 'clamp(1.125rem, 3vw, 1.875rem)' }}>
+                    Got a weird idea or want to trade failure stories over coffee? I'm in.
+                  </p>
+              </div>
             </div>
-          </div>
-          <div className="relative">
-            {/* Modern Collage Layout - Larger Thumbnails */}
-            <div className="relative w-full h-[clamp(600px,80vh,900px)] ml-4">
+            <div className="relative lg:self-stretch">
+              {/* Modern Collage Layout - Larger Thumbnails */}
+              <div className="relative w-full h-[clamp(600px,80vh,900px)] lg:h-full lg:ml-4">
               {/* Large main image - top center-right */}
               <div className="absolute top-0 left-0 w-2/3 h-3/5 rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105 hover:rotate-1 z-10 hover:z-50 group">
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -137,12 +142,13 @@ export default function AboutSection() {
                   className="object-cover"
                 />
               </div>
-            </div>  
+              </div>  
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="flex justify-center mt-16 mb-8">
+      <div className="flex justify-center pb-8">
         <button
           onClick={() => window.scrollTo({ top: document.getElementById("experience").offsetTop, behavior: "smooth" })}
           className="text-white hover:text-yellow-300 transition-all duration-300 animate-bounce hover:scale-110 p-3 rounded-full backdrop-blur-sm"

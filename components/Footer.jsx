@@ -9,7 +9,7 @@ export default function Footer() {
     >
       <div className="max-w-4xl mx-auto text-center">
         <p style={{ color: "rgba(255, 255, 255, 0.8)" }}>
-          © 2024 Anurag Aggarwal. Built with Next.js and Tailwind CSS.
+          © {new Date().getFullYear()} Anurag Aggarwal. Built with Next.js and Tailwind CSS.
         </p>
       </div>
     </footer>

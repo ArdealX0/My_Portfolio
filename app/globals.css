@@ -133,8 +133,6 @@
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    /* Prevent zoom on double-tap for mobile */
-    touch-action: manipulation;
     /* Ensure proper scaling on all devices */
     width: 100%;
     height: 100%;
@@ -146,6 +144,7 @@
     background: transparent;
     /* Prevent content shifting during scroll */
     overflow-x: hidden;
+    overflow-y: auto;
     /* Smooth scroll momentum on mobile */
     -webkit-overflow-scrolling: touch;
     /* Prevent scroll bounce on iOS */
@@ -173,8 +172,14 @@
     scroll-behavior: smooth;
   }
   
-  /* Prevent zoom on double-tap for mobile */
-  * {
+  /*
+    Allow natural scrolling/panning.
+    If you want to reduce double-tap zoom delays, scope `touch-action: manipulation`
+    to interactive elements only (not the entire page).
+  */
+  button,
+  a,
+  [role="button"] {
     touch-action: manipulation;
   }
   
@@ -208,8 +213,8 @@
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
-    padding-left: max(1rem, 5vw);
-    padding-right: max(1rem, 5vw);
+    padding-left: max(1rem, 3vw);
+    padding-right: max(1rem, 3vw);
     box-sizing: border-box;
     /* Prevent horizontal overflow during zoom */
     overflow-x: hidden;
@@ -219,7 +224,7 @@
   .section-container {
     width: 100%;
     max-width: 100%;
-    padding: clamp(2rem, 8vw, 6rem) max(1rem, 5vw);
+    padding: clamp(1.5rem, 5vw, 4rem) max(1rem, 3vw);
     box-sizing: border-box;
     /* Prevent horizontal overflow */
     overflow-x: hidden;
@@ -300,7 +305,7 @@
   
   @media (min-width: 1024px) {
     .container {
-      max-width: 1200px;
+      max-width: 1440px;
     }
   }
   
@@ -310,7 +315,7 @@
     }
     
     .container {
-      max-width: 1400px;
+      max-width: 1600px;
     }
   }
   
@@ -318,13 +323,6 @@
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .responsive-text {
       font-size: clamp(1rem, 2.2vw, 1.8rem);
-    }
-  }
-  
-  /* Prevent horizontal scroll at any zoom level */
-  @media (max-width: 100vw) {
-    * {
-      max-width: 100%;
     }
   }
   

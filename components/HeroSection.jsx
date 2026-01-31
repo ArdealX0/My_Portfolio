@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 export default function HeroSection({ scrollToSection }) {
   return (
     <section
-      className="section-container flex-col items-center relative pb-0 pt-64"
+      className="section-container relative flex flex-col"
       style={{
         background: "linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 70%, #475569 100%)",
         minHeight: "100vh",
@@ -65,8 +65,8 @@ export default function HeroSection({ scrollToSection }) {
         }
       `}</style>
 
-      <div className="container text-center relative z-10">
-        <div className="mb-6">
+      <div className="container text-center relative z-10 flex-1 flex flex-col justify-center items-center">
+        <div className="mb-10">
           <div className="relative mx-auto mb-6 w-[min(300px,80vw)] h-[min(300px,80vw)]">
             <Image
               src="/ProfilePic.jpg"
@@ -152,7 +152,7 @@ export default function HeroSection({ scrollToSection }) {
             </button>
 
             <button
-              onClick={() => window.open("mailto:anuragaggarwal0612@gmail.com", "_blank")}
+              onClick={() => window.open("mailto:aaggar68@uwo.ca", "_blank")}
               className="group p-5 rounded-full transition-all duration-300 hover:scale-110 shadow-xl hover:shadow-2xl"
               style={{
                 background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
@@ -177,28 +177,29 @@ export default function HeroSection({ scrollToSection }) {
           </div>
         </div>
 
-        <div className="flex justify-center mt-12">
-          <button
-            onClick={() => scrollToSection("about")}
-            className="text-white hover:text-yellow-300 transition-all duration-300 animate-bounce hover:scale-110 p-3 rounded-full backdrop-blur-sm"
-            style={{ 
-              color: "#ffffff",
-              background: "rgba(255, 255, 255, 0.1)",
-              border: "2px solid rgba(255, 255, 255, 0.2)",
-            }}
-            aria-label="Scroll to about section"
+      </div>
+
+      <div className="flex justify-center pb-8">
+        <button
+          onClick={() => scrollToSection("about")}
+          className="text-white hover:text-yellow-300 transition-all duration-300 animate-bounce hover:scale-110 p-3 rounded-full backdrop-blur-sm"
+          style={{ 
+            color: "#ffffff",
+            background: "rgba(255, 255, 255, 0.1)",
+            border: "2px solid rgba(255, 255, 255, 0.2)",
+          }}
+          aria-label="Scroll to about section"
+        >
+          <svg
+            className="w-10 h-10"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              className="w-10 h-10"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </button>
-        </div>
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </button>
       </div>
     </section>
   )

@@ -8,59 +8,41 @@ export default function ProjectsSection() {
   
   const projects = [
     {
-      title: "Phish Sense – AI Phishing Detection System",
+      title: "Plant Disease Classifier",
       description:
-        "Smart security system that learns phishing patterns through NLP models from data and flags malicious content in real time.",
-      tech: ["PyTorch", "DistilBERT", "FastAPI", "PostgreSQL", "React", "Chrome Extension", "Docker", "CI/CD"],
-      thumbnail: "/phish-sense-ai-detection.png",
-      github: "https://github.com/Aaggar68/phish-sense",
-      timeSpan: "Sep 2025 - Present",
+        "Built a custom CNN to classify 38 plant leaf diseases across 87,000+ images; deployed an optimized model on Raspberry Pi for edge-based greenhouse-style inference.",
+      tech: ["Python", "TensorFlow", "CNN", "Computer Vision", "Raspberry Pi"],
+      thumbnail: "/smart-greenhouse-automation-system.jpg",
+      timeSpan: "Sep – Dec. 2025",
+      showGithub: false,
     },
     {
-      title: "Autonomous Delivery Rover",
+      title: "Servo Control Circuit Design",
       description:
-        "Compact indoor rover that navigates hallways using LiDAR + IMU fusion and lightweight path planning.",
-      tech: ["ROS", "C++", "LiDAR", "SLAM"],
-      thumbnail: "/autonomous-rover-with-lidar-sensor.jpg",
-      github: "https://github.com/Aaggar68/autonomous-delivery-rover",
-      timeSpan: "Sep 2024 - Dec 2024",
+        "Designed a portable PWM + voltage regulation circuit (LM317T + NE555) for stable servo control at 50 Hz, with timing calculations and failure analysis to reduce jitter.",
+      tech: ["Analog Electronics", "NE555", "LM317T", "PWM", "Circuit Design"],
+      thumbnail: "/bldc-motor-controller-circuit-board.jpg",
+      timeSpan: "Sep – Dec. 2025",
       showGithub: false,
     },
     {
       title: "Stock Analyzer",
       description:
-        "Data-driven trading insights Python tool that ingests historical & real-time market data, computes financial advice for stock and crypto trading and giving insights on the stocks to buy and sell.",
-      tech: ["Python", "AI + Financial Analysis", "DevOps", "Data Analysis"],
+        "Python-based CLI for equity analysis that integrates financial ratios, macro indicators, and sentiment; includes ETL + REST API ingestion for live data and backtesting-ready deployments.",
+      tech: ["Python", "REST APIs", "Docker", "Data Analysis", "Sentiment Analysis"],
       thumbnail: "/stock-analyzer-dashboard.jpg",
       github: "https://github.com/Aaggar68/Stock_Analyser.git",
-      timeSpan: "Jan 2025 - Apr 2025",
-    },
-    {
-      title: "BLDC Motor Controller (FOC)",
-      description:
-        "Real-time BLDC controller with field-oriented control, current sensing, and safety interlocks for smooth torque.",
-      tech: ["C++", "STM32", "FOC", "Real-time Control"],
-      thumbnail: "/bldc-motor-controller-circuit-board.jpg",
-      github: "https://github.com/Aaggar68/bldc-motor-controller",
-      timeSpan: "Jan 2024 - Mar 2024",
-      showGithub: false,
-    },
-    {
-      title: "Smart Greenhouse (TinyML)",
-      description:
-        "Automated greenhouse that predicts irrigation needs on-device using a tiny neural network and live dashboard.",
-      tech: ["TinyML", "Arduino", "IoT", "Neural Networks"],
-      thumbnail: "/smart-greenhouse-automation-system.jpg",
-      github: "https://github.com/Aaggar68/smart-greenhouse-tinyml",
-      timeSpan: "Jun 2023 - Aug 2023",
+      timeSpan: "Mar – Apr. 2024",
     },
   ]
   
-  // Split projects into two sets of 4 projects each
-  const projectSets = [
-    projects.slice(0, 4), // First 4 projects
-    projects.slice(4)     // Remaining projects
-  ]
+  // Chunk projects into sets (avoid empty pages)
+  const chunkSize = 4
+  const projectSets = []
+  for (let i = 0; i < projects.length; i += chunkSize) {
+    const chunk = projects.slice(i, i + chunkSize)
+    if (chunk.length > 0) projectSets.push(chunk)
+  }
   
   const currentProjects = projectSets[currentProjectSet] || projects.slice(0, 4)
   
@@ -71,7 +53,7 @@ export default function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="section-container relative"
+      className="section-container relative flex flex-col"
       style={{
         background: "linear-gradient(135deg, #475569 0%, #334155 30%, #1e293b 70%, #0f172a 100%)",
         minHeight: "100vh",
@@ -114,21 +96,22 @@ export default function ProjectsSection() {
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent animate-pulse"></div>
         <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent animate-pulse"></div>
       </div>
-      <div className="container">
-        <h2 className="font-bold text-center mb-6 responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>
-          Projects & Pandemonium
-        </h2>
-        <p className="text-center mb-12 responsive-text leading-relaxed max-w-4xl mx-auto" style={{ color: "#f1f5f9", fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
-          A messy mix of prototypes, hacks, and demos — code, videos, and the glorious failures that taught me the most.
-        </p>
-        <div className="flex flex-col items-center gap-8">
-          {/* Projects Grid */}
-          <div className={`grid gap-6 justify-items-center max-w-4xl mx-auto ${
-            currentProjects.length === 1 
-              ? "grid-cols-1 justify-center" 
-              : "grid-cols-1 sm:grid-cols-2"
-          }`}>
-            {currentProjects.map((project, index) => (
+      <div className="container flex-1 flex flex-col">
+        <div className="my-auto">
+          <h2 className="font-bold text-center mb-6 responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>
+            Projects & Pandemonium
+          </h2>
+          <p className="text-center mb-12 responsive-text leading-relaxed max-w-4xl mx-auto" style={{ color: "#f1f5f9", fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
+            A messy mix of prototypes, hacks, and demos — code, videos, and the glorious failures that taught me the most.
+          </p>
+          <div className="flex flex-col items-center gap-8">
+            {/* Projects Grid */}
+            <div className={`grid gap-6 justify-items-center max-w-4xl mx-auto ${
+              currentProjects.length === 1 
+                ? "grid-cols-1 justify-center" 
+                : "grid-cols-1 sm:grid-cols-2"
+            }`}>
+              {currentProjects.map((project, index) => (
             <div
               key={index}
               className="rounded-xl p-6 shadow-lg border transition-all duration-300 cursor-pointer hover:scale-105 w-full max-w-md relative"
@@ -214,34 +197,37 @@ export default function ProjectsSection() {
           </div>
           
           {/* Bottom scroll button */}
-          <div className="flex justify-center">
-            <button
-              onClick={handleNextProjects}
-              className="flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 hover:shadow-2xl"
-              style={{
-                background: "rgba(0, 0, 0, 0.4)",
-                backdropFilter: "blur(10px)",
-                border: "2px solid rgba(255, 255, 255, 0.3)",
-                color: "#ffffff",
-              }}
-            >
-              <span className="text-lg font-semibold">
-                {currentProjectSet === 0 ? "View More Projects" : "View Previous Projects"}
-              </span>
-              <svg 
-                className={`w-6 h-6 transition-transform duration-300 ${currentProjectSet === 0 ? 'rotate-0' : 'rotate-180'}`}
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
+          {projectSets.length > 1 && (
+            <div className="flex justify-center">
+              <button
+                onClick={handleNextProjects}
+                className="flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 hover:shadow-2xl"
+                style={{
+                  background: "rgba(0, 0, 0, 0.4)",
+                  backdropFilter: "blur(10px)",
+                  border: "2px solid rgba(255, 255, 255, 0.3)",
+                  color: "#ffffff",
+                }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
+                <span className="text-lg font-semibold">
+                  {currentProjectSet === 0 ? "View More Projects" : "View Previous Projects"}
+                </span>
+                <svg 
+                  className={`w-6 h-6 transition-transform duration-300 ${currentProjectSet === 0 ? 'rotate-0' : 'rotate-180'}`}
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          )}
+        </div>
         </div>
       </div>
 
-      <div className="flex justify-center mt-16 mb-8">
+      <div className="flex justify-center pb-8">
         <button
           onClick={() => window.scrollTo({ top: document.getElementById("skills").offsetTop, behavior: "smooth" })}
           className="text-white hover:text-yellow-300 transition-all duration-300 animate-bounce hover:scale-110 p-3 rounded-full backdrop-blur-sm"

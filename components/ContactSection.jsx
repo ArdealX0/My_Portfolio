@@ -7,7 +7,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="section-container relative overflow-hidden"
+      className="section-container relative overflow-hidden flex flex-col"
       style={{
         background: "linear-gradient(135deg, #475569 0%, #334155 30%, #1e293b 70%, #0f172a 100%)",
         minHeight: "100vh",
@@ -51,25 +51,26 @@ export default function ContactSection() {
         <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent animate-pulse"></div>
       </div>
 
-      <div className="container text-center relative z-10 pt-20">
-        <div className="mb-12">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <Rocket className="w-8 h-8 text-white animate-bounce" />
-            <h2 className="responsive-text font-bold text-white text-balance" style={{ fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>Let's Collaborate!</h2>
-            <Lightbulb className="w-8 h-8 text-yellow-300 animate-pulse" />
+      <div className="container text-center relative z-10 flex-1 flex flex-col">
+        <div className="my-auto">
+          <div className="mb-12">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <Rocket className="w-8 h-8 text-white animate-bounce" />
+              <h2 className="responsive-text font-bold text-white text-balance" style={{ fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>Let's Collaborate!</h2>
+              <Lightbulb className="w-8 h-8 text-yellow-300 animate-pulse" />
+            </div>
+            <p className="responsive-text text-white/90 max-w-2xl mx-auto text-pretty" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
+              Your next project deserves creativity and passion
+            </p>
           </div>
-          <p className="responsive-text text-white/90 max-w-2xl mx-auto text-pretty" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
-            Your next project deserves creativity and passion
+
+          <p className="max-w-4xl mx-auto leading-relaxed mb-16 responsive-text text-white/95 text-pretty" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
+            I turn rough ideas into real, working prototypes — whether that means soldering a PCB, training a tiny model,
+            or quickly iterating a CAD part. Got a startup idea, a side-project, or just want to talk hardware + AI over
+            coffee? Hit me up — I'd love to help or just swap stories.
           </p>
-        </div>
 
-        <p className="max-w-4xl mx-auto leading-relaxed mb-16 responsive-text text-white/95 text-pretty" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
-          I turn rough ideas into real, working prototypes — whether that means soldering a PCB, training a tiny model,
-          or quickly iterating a CAD part. Got a startup idea, a side-project, or just want to talk hardware + AI over
-          coffee? Hit me up — I'd love to help or just swap stories.
-        </p>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl hover:scale-105 hover:shadow-3xl transition-all duration-300 border border-white/20">
             <div className="bg-blue-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
               <LinkedinIcon className="w-8 h-8 text-white" />
@@ -93,12 +94,12 @@ export default function ContactSection() {
             </div>
             <h3 className="text-2xl font-bold mb-4 text-gray-800">Project Collaborations</h3>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              Have an exciting project in mind? Let's discuss how we can bring your vision to life together.
+              Have an exciting project in mind? Email me at <span className="font-semibold">aaggar68@uwo.ca</span> or call <span className="font-semibold">(647) 649-4667</span>.
             </p>
             <Button
               className="w-full bg-red-500 hover:bg-red-600 text-white rounded-full py-3 text-lg font-semibold transition-all duration-300 hover:scale-105"
               onClick={() =>
-                window.open("mailto:anuragaggarwal0612@gmail.com?subject=Project Collaboration Opportunity", "_blank")
+                window.open("mailto:aaggar68@uwo.ca?subject=Project Collaboration Opportunity", "_blank")
               }
             >
               <Mail className="w-5 h-5 mr-2" />
@@ -138,7 +139,7 @@ export default function ContactSection() {
             <Button
               size="lg"
               className="px-12 py-4 bg-white text-primary hover:bg-white/90 rounded-full text-xl font-bold transition-all duration-300 hover:scale-110 hover:shadow-2xl"
-              onClick={() => window.open("mailto:anuragaggarwal0612@gmail.com?subject=Let's Build Something Amazing!", "_blank")}
+              onClick={() => window.open("mailto:aaggar68@uwo.ca?subject=Let's Build Something Amazing!", "_blank")}
             >
               <MessageCircle className="w-6 h-6 mr-3" />
               Let's Chat!
@@ -159,7 +160,8 @@ export default function ContactSection() {
           </div>
         </div>
 
-        <p className="text-lg text-white/80 font-medium">Can't wait to hear from you — ping me anytime! 🚀</p>
+        <p className="text-lg text-white/80 font-medium">Can't wait to hear from you — ping me anytime!</p>
+        </div>
       </div>
     </section>
   )

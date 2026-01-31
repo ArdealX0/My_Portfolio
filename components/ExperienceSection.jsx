@@ -7,48 +7,42 @@ export default function ExperienceSection() {
 
   const experiences = [
     {
+      title: "Embedded Systems and Mechatronics Developer",
+      company: "Tethos Association",
+      period: "Sept. 2025 – Present",
+      description:
+        "Collaborating on an interactive sensor glove: designing casing + circuit prototypes, integrating sensors on Arduino, and aligning hardware data with gameplay logic for responsive motion mapping.",
+      timelineDescription: [
+        "Collaborated on material selection, glove casing design, and circuit prototypes with mechanical and electrical teams.",
+        "Programmed an Arduino Uno to integrate a gyroscope, flex sensors, and other inputs to improve input reliability for the interactive game.",
+        "Provided hardware–software integration guidance to align sensor data with game logic, reducing iteration and rework.",
+        "Helped enable accurate glove-to-hand motion mapping, improving responsiveness and realism of the control interface.",
+      ]
+    },
+    {
       title: "Computer Vision & AI-Powered Automation Intern",
       company: "Kissan Engineers (Casting)",
-      period: "Summer 2025",
+      period: "May – Sept. 2025",
       description:
-        "Deployed a real-time vision inspection and monitoring system on the production line to catch surface defects early and streamline post-cast handling.",
+        "Built a CV-based defect inspection ML system and supporting data workflows to reduce manual operator checks and enable real-time defect flagging on the production line.",
       timelineDescription: [
-        "Reduced manual inspection time by ~33% and improved early defect detection by deploying a real-time vision system on the production line.",
-        "Engineered end-to-end systems: KiCad PCBs, STM32 RTOS firmware, Jetson-accelerated vision (PyTorch/TensorRT), MQTT telemetry, and ROS-enabled pick-and-place integration."
+        "Designed a CV-based defect-inspection ML model to identify improperly cast parts, reducing operator checks by 62%.",
+        "Improved the model’s inference rate by 30% via image normalization, ROI cropping, and color-space optimization.",
+        "Delivered Python-based ETL workflows generating CSV quality reports for structured analysis and model fine-tuning.",
+        "Supported integration into Vision Autoflow for real-time defective-part flagging without disrupting other processes.",
       ]
     },
     {
       title: "CNC Machinist",
-      company: "Aline Precision Tool Limited",
-      period: "2023 – 2024",
+      company: "A-line Precision Tool Ltd.",
+      period: "Mar. – Aug. 2023",
       description:
-        "Machined aerospace-grade alloys to tight tolerances using advanced CNC equipment. Generated optimized toolpaths and collaborated with engineers to improve manufacturability through DFM feedback.",
+        "Led process improvements and operator guidance for intricate CNC components, focusing on GD&T, tooling optimization, and quality checks to reduce downtime and rework.",
       timelineDescription: [
-        "Machined aerospace-grade alloys (e.g., 6061-T6 aluminum, 4140 steel, Inconel) to tolerances within ±0.0005–0.001\" using appropriate spindle speeds, feeds, and coolant strategies.",
-        "Generated and optimized toolpaths in Mastercam (2D contouring, pocketing, drilling, and lathe cycles), balancing cycle time reduction with surface finish requirements.",
-        "Collaborated with engineers to provide DFM (Design for Manufacturability) feedback, suggesting tolerance adjustments and machining strategies to improve manufacturability."
-      ]
-    },
-     {
-      title: "Robotics Workshop Coordinator",
-      company: "Community Robotics Club — Outreach & Workshops",
-      period: "2023 – 2024",
-      description:
-        "Ran beginner-friendly Arduino & CAD workshops that turned novices into prototype-makers in a weekend. Wrote step-by-step guides and mentored follow-ups to help participants iterate and improve.",
-      timelineDescription: [
-        "Ran beginner-friendly workshops that helped attendees build working prototypes over a weekend and jumpstart their confidence.",
-        "Built reproducible teaching kits and version-controlled templates (Arduino sketches, CAD part libraries), plus soldering standards and troubleshooting checklists to teach robust hardware practices."
-      ]
-    },
-    {
-      title: "Embedded Systems Developer (Independent)",
-      company: "Freelance Work (Self-Employed)",
-      period: "2021 – 2023",
-      description:
-        "Designed and flashed real-time firmware for motor control, sensors, and safety interlocks. Built compact PCBs and tuned low-latency control loops for reliable hardware performance.",
-      timelineDescription: [
-        "Improved prototype reliability and reduced debugging time by shipping robust firmware and concise test procedures.",
-        "Implemented interrupt-driven firmware and RTOS tasks (STM32/ARM), DMA-based sensor acquisition, low-latency PID/FOC control loops, hardware watchdogs, and power/thermal management strategies."
+        "Trained a team of 4 machinists on GD&T, machining nuances, and optimized tooling, reducing shop downtime by 35%.",
+        "Documented process tweaks in procedures for intricate components to improve reproducibility and reduce rework/scrap.",
+        "Oversaw shop-floor production of intricate components, reducing tool failures and unplanned downtime by 24%.",
+        "Guided operators on pre-inspection quality checks, identifying surface-finish issues and improving shop efficiency by 44%.",
       ]
     },
   ]
@@ -56,7 +50,7 @@ export default function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="section-container relative"
+      className="section-container relative flex flex-col"
       style={{
         background: "linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 70%, #475569 100%)",
         minHeight: "100vh",
@@ -99,153 +93,155 @@ export default function ExperienceSection() {
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"></div>
         <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent animate-pulse"></div>
       </div>
-      <div className="container">
-        <h2 className="font-bold text-center mb-6 responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>
-          Roles & Impact — What I built and why it mattered.
-        </h2>
-        <p className="text-center mb-12 responsive-text leading-relaxed max-w-4xl mx-auto" style={{ color: "#f1f5f9", fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
-          Real projects — from prototype to demo — that solved real problems, saved time, and taught me how to build smarter.
-        </p>
+      <div className="container flex-1 flex flex-col">
+        <div className="my-auto">
+          <h2 className="font-bold text-center mb-6 responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>
+            Roles & Impact — What I built and why it mattered.
+          </h2>
+          <p className="text-center mb-12 responsive-text leading-relaxed max-w-4xl mx-auto" style={{ color: "#f1f5f9", fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
+            Real projects — from prototype to demo — that solved real problems, saved time, and taught me how to build smarter.
+          </p>
 
-        <div className="text-center mb-12">
-          <button
-            onClick={() => setShowTimeline(!showTimeline)}
-            className="px-20 py-6 rounded-full font-bold text-2xl transition-all duration-300 transform hover:scale-110 hover:shadow-2xl"
-            style={{
-              background: showTimeline
-                ? "linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #0891b2 100%)"
-                : "linear-gradient(135deg, #06b6d4 0%, #0ea5e9 50%, #0891b2 100%)",
-              color: "#ffffff",
-              border: "3px solid rgba(6, 182, 212, 0.4)",
-              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
-            }}
-          >
-            {showTimeline ? "Display Roles" : "Show Impact"}
-          </button>
-        </div>
+          <div className="text-center mb-12">
+            <button
+              onClick={() => setShowTimeline(!showTimeline)}
+              className="px-20 py-6 rounded-full font-bold text-2xl transition-all duration-300 transform hover:scale-110 hover:shadow-2xl"
+              style={{
+                background: showTimeline
+                  ? "linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #0891b2 100%)"
+                  : "linear-gradient(135deg, #06b6d4 0%, #0ea5e9 50%, #0891b2 100%)",
+                color: "#ffffff",
+                border: "3px solid rgba(6, 182, 212, 0.4)",
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
+              }}
+            >
+              {showTimeline ? "Display Roles" : "Show Impact"}
+            </button>
+          </div>
 
-        {showTimeline ? (
-          // Timeline View
-          <div className="relative">
-            {/* Timeline line */}
-            <div
-              className="absolute left-8 top-0 bottom-0 w-1 rounded-full"
-              style={{ background: "linear-gradient(to bottom, #8b5cf6, #06b6d4, #10b981)" }}
-            ></div>
+          {showTimeline ? (
+            // Timeline View
+            <div className="relative">
+              {/* Timeline line */}
+              <div
+                className="absolute left-8 top-0 bottom-0 w-1 rounded-full"
+                style={{ background: "linear-gradient(to bottom, #8b5cf6, #06b6d4, #10b981)" }}
+              ></div>
 
-            <div className="space-y-8">
-              {experiences.map((job, index) => (
-                <div key={index} className="relative flex items-start">
-                  {/* Timeline dot */}
-                  <div
-                    className="absolute left-6 w-6 h-6 rounded-full border-4 z-10 animate-pulse"
-                    style={{
-                      background: "linear-gradient(135deg, #8b5cf6, #06b6d4)",
-                      borderColor: "#ffffff",
-                    }}
-                  ></div>
+              <div className="space-y-8">
+                {experiences.map((job, index) => (
+                  <div key={index} className="relative flex items-start">
+                    {/* Timeline dot */}
+                    <div
+                      className="absolute left-6 w-6 h-6 rounded-full border-4 z-10 animate-pulse"
+                      style={{
+                        background: "linear-gradient(135deg, #8b5cf6, #06b6d4)",
+                        borderColor: "#ffffff",
+                      }}
+                    ></div>
 
-                  {/* Timeline content */}
-                  <div
-                    className="ml-20 rounded-xl p-8 shadow-lg border transform transition-all duration-300"
-                    style={{
-                      background: "rgba(0, 0, 0, 0.6)",
-                      backdropFilter: "blur(10px)",
-                      borderColor: "rgba(255, 255, 255, 0.2)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-2px)"
-                      e.currentTarget.style.boxShadow = "0 20px 40px rgba(0, 0, 0, 0.3)"
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)"
-                      e.currentTarget.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)"
-                    }}
-                  >
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                      <h3 className="text-2xl font-bold" style={{ color: "#ffffff" }}>
-                        {job.title}
-                      </h3>
-                      <span
-                        className="font-bold px-5 py-3 rounded-full text-lg"
-                        style={{
-                          color: "#ffffff",
-                          background: "linear-gradient(135deg, #0ea5e9, #06b6d4)",
-                          fontWeight: "700",
-                        }}
-                      >
-                        {job.period}
-                      </span>
+                    {/* Timeline content */}
+                    <div
+                      className="ml-20 rounded-xl p-8 shadow-lg border transform transition-all duration-300"
+                      style={{
+                        background: "rgba(0, 0, 0, 0.6)",
+                        backdropFilter: "blur(10px)",
+                        borderColor: "rgba(255, 255, 255, 0.2)",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = "translateY(-2px)"
+                        e.currentTarget.style.boxShadow = "0 20px 40px rgba(0, 0, 0, 0.3)"
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = "translateY(0)"
+                        e.currentTarget.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)"
+                      }}
+                    >
+                      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                        <h3 className="text-2xl font-bold" style={{ color: "#ffffff" }}>
+                          {job.title}
+                        </h3>
+                        <span
+                          className="font-bold px-5 py-3 rounded-full text-lg"
+                          style={{
+                            color: "#ffffff",
+                            background: "linear-gradient(135deg, #0ea5e9, #06b6d4)",
+                            fontWeight: "700",
+                          }}
+                        >
+                          {job.period}
+                        </span>
+                      </div>
+                      <p className="font-semibold mb-4 text-lg" style={{ color: "#f0f9ff" }}>
+                        {job.company}
+                      </p>
+                      <ul className="space-y-3">
+                        {job.timelineDescription.map((point, pointIndex) => (
+                          <li key={pointIndex} className="flex items-start">
+                            <span className="flex-shrink-0 w-2 h-2 rounded-full mt-2 mr-3" style={{ background: "#06b6d4" }}></span>
+                            <span className="leading-relaxed text-lg" style={{ color: "#ffffff" }}>
+                              {point}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            // Card View (updated layout)
+            <div className="grid lg:grid-cols-2 xl:grid-cols-2 gap-6 justify-items-center">
+              {experiences.map((job, index) => (
+                <div
+                  key={index}
+                  className="rounded-xl p-8 shadow-lg border transition-all duration-300 cursor-pointer w-full max-w-sm"
+                  style={{
+                    background: "rgba(0, 0, 0, 0.4)",
+                    backdropFilter: "blur(10px)",
+                    borderColor: "rgba(255, 255, 255, 0.3)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(0, 0, 0, 0.5)"
+                    e.currentTarget.style.transform = "translateY(-2px)"
+                    e.currentTarget.style.boxShadow = "0 20px 40px rgba(0, 0, 0, 0.3)"
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(0, 0, 0, 0.4)"
+                    e.currentTarget.style.transform = "translateY(0)"
+                    e.currentTarget.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)"
+                  }}
+                >
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-bold mb-3" style={{ color: "#ffffff" }}>
+                      {job.title}
+                    </h3>
                     <p className="font-semibold mb-4 text-lg" style={{ color: "#f0f9ff" }}>
                       {job.company}
                     </p>
-                    <ul className="space-y-3">
-                      {job.timelineDescription.map((point, pointIndex) => (
-                        <li key={pointIndex} className="flex items-start">
-                          <span className="flex-shrink-0 w-2 h-2 rounded-full mt-2 mr-3" style={{ background: "#06b6d4" }}></span>
-                          <span className="leading-relaxed text-lg" style={{ color: "#ffffff" }}>
-                            {point}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                    <span
+                      className="inline-block font-bold rounded-full text-lg px-5 py-3"
+                      style={{
+                        color: "#ffffff",
+                        background: "linear-gradient(135deg, #0ea5e9, #06b6d4)",
+                        fontWeight: "700",
+                      }}
+                    >
+                      {job.period}
+                    </span>
                   </div>
+                  <p className="leading-relaxed text-center text-lg" style={{ color: "#ffffff" }}>
+                    {job.description}
+                  </p>
                 </div>
               ))}
             </div>
-          </div>
-        ) : (
-          // Card View (updated layout)
-          <div className="grid lg:grid-cols-2 xl:grid-cols-2 gap-6 justify-items-center">
-            {experiences.map((job, index) => (
-              <div
-                key={index}
-                className="rounded-xl p-8 shadow-lg border transition-all duration-300 cursor-pointer w-full max-w-sm"
-                style={{
-                  background: "rgba(0, 0, 0, 0.4)",
-                  backdropFilter: "blur(10px)",
-                  borderColor: "rgba(255, 255, 255, 0.3)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(0, 0, 0, 0.5)"
-                  e.currentTarget.style.transform = "translateY(-2px)"
-                  e.currentTarget.style.boxShadow = "0 20px 40px rgba(0, 0, 0, 0.3)"
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(0, 0, 0, 0.4)"
-                  e.currentTarget.style.transform = "translateY(0)"
-                  e.currentTarget.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)"
-                }}
-              >
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold mb-3" style={{ color: "#ffffff" }}>
-                    {job.title}
-                  </h3>
-                  <p className="font-semibold mb-4 text-lg" style={{ color: "#f0f9ff" }}>
-                    {job.company}
-                  </p>
-                  <span
-                    className="inline-block font-bold rounded-full text-lg px-5 py-3"
-                    style={{
-                      color: "#ffffff",
-                      background: "linear-gradient(135deg, #0ea5e9, #06b6d4)",
-                      fontWeight: "700",
-                    }}
-                  >
-                    {job.period}
-                  </span>
-                </div>
-                <p className="leading-relaxed text-center text-lg" style={{ color: "#ffffff" }}>
-                  {job.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
-      <div className="flex justify-center mt-16 mb-8">
+      <div className="flex justify-center pb-8">
         <button
           onClick={() => window.scrollTo({ top: document.getElementById("projects").offsetTop, behavior: "smooth" })}
           className="text-white hover:text-yellow-300 transition-all duration-300 animate-bounce p-3 rounded-full backdrop-blur-sm"
