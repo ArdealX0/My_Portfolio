@@ -16,12 +16,7 @@ export default function Portfolio() {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      // Use smooth scrolling with proper offset for navigation
-      const elementPosition = element.offsetTop - 80 // Account for fixed navigation
-      window.scrollTo({
-        top: elementPosition,
-        behavior: "smooth"
-      })
+      element.scrollIntoView({ behavior: "smooth", block: "start" })
       setActiveSection(sectionId)
     }
   }

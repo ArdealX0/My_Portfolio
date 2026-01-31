@@ -243,7 +243,7 @@ export default function ExperienceSection() {
 
       <div className="flex justify-center pb-8">
         <button
-          onClick={() => window.scrollTo({ top: document.getElementById("projects").offsetTop, behavior: "smooth" })}
+          onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth", block: "start" })}
           className="text-white hover:text-yellow-300 transition-all duration-300 animate-bounce p-3 rounded-full backdrop-blur-sm"
           style={{ 
             color: "#ffffff",

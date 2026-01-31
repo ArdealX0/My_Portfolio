@@ -148,7 +148,7 @@
     /* Smooth scroll momentum on mobile */
     -webkit-overflow-scrolling: touch;
     /* Prevent scroll bounce on iOS */
-    overscroll-behavior: none;
+    overscroll-behavior: auto;
     /* Better zoom handling */
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -187,7 +187,8 @@
   .scroll-container {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
+    /* Don't block scroll chaining (can break mouse wheel/trackpad scrolling) */
+    overscroll-behavior: auto;
   }
   
   /* Enhanced zoom-coherent design */

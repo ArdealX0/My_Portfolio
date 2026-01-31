@@ -443,7 +443,7 @@ export default function SkillsSection() {
 
       <div className="flex justify-center pb-8">
         <button
-          onClick={() => window.scrollTo({ top: document.getElementById("contact").offsetTop, behavior: "smooth" })}
+          onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" })}
           className="text-white hover:text-blue-400 transition-all duration-300 animate-bounce p-3 rounded-full backdrop-blur-sm"
           style={{ 
             color: "#ffffff",
