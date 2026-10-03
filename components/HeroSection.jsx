@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { profileLinks } from "@/lib/portfolio"
 
 export default function HeroSection({ scrollToSection }) {
   return (
@@ -80,7 +81,7 @@ export default function HeroSection({ scrollToSection }) {
             className="text-gray-200 max-w-2xl mx-auto leading-relaxed mb-6 mt-2 responsive-text"
             style={{ color: "#f8fafc", fontSize: 'clamp(1.125rem, 3vw, 1.5rem)' }}
           >
-            Mechatronics + AI engineer — building intelligent hardware and software that solve real-world problems. 
+            Mechatronics + AI engineering student at Western, building across computer vision, robotics, and software quality. Seeking a summer 2027 internship.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
             <Button
@@ -94,7 +95,7 @@ export default function HeroSection({ scrollToSection }) {
                 boxShadow: "0 12px 40px rgba(14, 165, 233, 0.4)",
                 minHeight: "60px",
               }}
-              onClick={() => scrollToSection("experience")}
+              onClick={() => scrollToSection("projects")}
             >
               View My Work
             </Button>
@@ -118,7 +119,8 @@ export default function HeroSection({ scrollToSection }) {
 
           <div className="flex justify-center gap-8">
             <button
-              onClick={() => window.open("https://github.com/Aaggar68", "_blank")}
+              onClick={() => window.open(profileLinks.github, "_blank", "noopener,noreferrer")}
+              aria-label="View my GitHub profile"
               className="group p-5 rounded-full transition-all duration-300 hover:scale-110 shadow-xl hover:shadow-2xl"
               style={{
                 background: "linear-gradient(135deg, #374151 0%, #111827 100%)",
@@ -135,7 +137,8 @@ export default function HeroSection({ scrollToSection }) {
             </button>
 
             <button
-              onClick={() => window.open("https://www.linkedin.com/in/aaggar68", "_blank")}
+              onClick={() => window.open(profileLinks.linkedin, "_blank", "noopener,noreferrer")}
+              aria-label="View my LinkedIn profile"
               className="group p-5 rounded-full transition-all duration-300 hover:scale-110 shadow-xl hover:shadow-2xl"
               style={{
                 background: "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)",
@@ -152,7 +155,8 @@ export default function HeroSection({ scrollToSection }) {
             </button>
 
             <button
-              onClick={() => window.open("mailto:aaggar68@uwo.ca", "_blank")}
+              onClick={() => window.open(`mailto:${profileLinks.email}`, "_blank")}
+              aria-label="Email Anurag"
               className="group p-5 rounded-full transition-all duration-300 hover:scale-110 shadow-xl hover:shadow-2xl"
               style={{
                 background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",

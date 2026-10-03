@@ -260,11 +260,16 @@ export default function SkillsSection() {
     },
   ]
 
+  // Supplemented with tools and skills verified on the current LinkedIn profile.
+  const additionalSkills = ["SQL", "Google BigQuery", "Google Colab", "Keras", "Faker", "Onshape", "NLP", "PWM Motor Control", "Computer Vision", "Vector Databases", "Quality Assurance", "Regression Testing", "System Integration Testing", "Jira", "Salesforce Testing", "PLC Integration", "Mastercam"]
+    .map((name, index) => ({ name, colors: mainSkills[index % mainSkills.length].colors }))
+  const currentSkills = [...mainSkills, ...additionalSkills]
+
   const certifications = [
     { 
       name: "CSWA – Certified SolidWorks Associate", 
       thumbnail: "/FavIcon.svg", 
-      date: "2024",
+      date: "Oct. 2024",
       verificationLink: "https://cv.virtualtester.com/qr/?b=SLDWRKS&i=C-ZVKXSA543B",
       colors: {
         background: "rgba(0, 123, 191, 0.1)",
@@ -325,10 +330,10 @@ export default function SkillsSection() {
           {/* Header */}
           <div className="text-center mb-16">
             <h2 className="font-bold mb-6 responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>
-              Wiring & Wisdom
+              Tools I build and test with.
             </h2>
             <p className="responsive-text leading-relaxed max-w-4xl mx-auto" style={{ color: "#f1f5f9", fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
-              Hardware know-how + software smarts — what I use to turn sketches into things that move, see, and think.
+              The tools behind my work in AI, embedded systems, manufacturing, data engineering, and software quality assurance.
             </p>
           </div>
 
@@ -337,7 +342,7 @@ export default function SkillsSection() {
               Technical Skills
             </h3>
             <div className="flex flex-wrap justify-center gap-4">
-              {mainSkills.map((skill, index) => (
+              {currentSkills.map((skill, index) => (
                 <div
                   key={index}
                   className="p-4 rounded-lg transition-all duration-300"

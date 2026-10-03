@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 
 export default function Navigation({ activeSection, scrollToSection }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -58,10 +59,11 @@ export default function Navigation({ activeSection, scrollToSection }) {
         <div className="flex items-center justify-between w-full">
           <button
             onClick={scrollToTop}
-            className="font-semibold leading-7 drop-shadow-sm text-4xl hover:scale-105 transition-transform duration-300 flex-shrink-0"
+            className="flex items-center gap-3 font-semibold leading-7 drop-shadow-sm text-xl lg:text-3xl hover:scale-105 transition-transform duration-300 flex-shrink-0"
             style={{ color: "#ffffff" }}
           >
-            Anurag Aggarwal
+            <Image src="/aa-logo.png" alt="" width={48} height={48} className="rounded-lg w-10 h-10 sm:w-12 sm:h-12" priority />
+            <span>Anurag Aggarwal</span>
           </button>
           <div className="hidden md:flex items-center space-x-3 flex-shrink-0">
             {["About", "Experience", "Projects", "Skills", "Contact"].map((item) => (

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Mail, LinkedinIcon, MessageCircle, Coffee, Lightbulb, Handshake, Rocket } from "lucide-react"
+import { profileLinks } from "@/lib/portfolio"
 
 export default function ContactSection() {
   return (
@@ -56,18 +57,18 @@ export default function ContactSection() {
           <div className="mb-12">
             <div className="flex items-center justify-center gap-3 mb-6">
               <Rocket className="w-8 h-8 text-white animate-bounce" />
-              <h2 className="responsive-text font-bold text-white text-balance" style={{ fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>Let's Collaborate!</h2>
+              <h2 className="responsive-text font-bold text-white text-balance" style={{ fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>Let's build something useful.</h2>
               <Lightbulb className="w-8 h-8 text-yellow-300 animate-pulse" />
             </div>
             <p className="responsive-text text-white/90 max-w-2xl mx-auto text-pretty" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
-              Your next project deserves creativity and passion
+              Internships, project collaborations, and conversations about engineering.
             </p>
           </div>
 
           <p className="max-w-4xl mx-auto leading-relaxed mb-16 responsive-text text-white/95 text-pretty" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
-            I turn rough ideas into real, working prototypes — whether that means soldering a PCB, training a tiny model,
-            or quickly iterating a CAD part. Got a startup idea, a side-project, or just want to talk hardware + AI over
-            coffee? Hit me up — I'd love to help or just swap stories.
+            I'm looking for a summer 2027 internship where I can contribute to computer vision, robotics, automation,
+            or software engineering. I also enjoy collaborating on hands-on projects — from embedded prototypes and
+            data pipelines to testing the software that connects them.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
@@ -75,13 +76,13 @@ export default function ContactSection() {
             <div className="bg-blue-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
               <LinkedinIcon className="w-8 h-8 text-white" />
             </div>
-            <h3 className="text-2xl font-bold mb-4 text-gray-800">Professional Networking</h3>
+            <h3 className="text-2xl font-bold mb-4 text-gray-800">Internships & Opportunities</h3>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              Connect with me on LinkedIn for professional opportunities, industry insights, and networking.
+              Connect on LinkedIn to talk about summer 2027 internships, engineering teams, and the work I'm building toward.
             </p>
             <Button
               className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-full py-3 text-lg font-semibold transition-all duration-300 hover:scale-105"
-              onClick={() => window.open("https://www.linkedin.com/in/aaggar68", "_blank")}
+              onClick={() => window.open(profileLinks.linkedin, "_blank", "noopener,noreferrer")}
             >
               <LinkedinIcon className="w-5 h-5 mr-2" />
               Connect on LinkedIn
@@ -94,12 +95,12 @@ export default function ContactSection() {
             </div>
             <h3 className="text-2xl font-bold mb-4 text-gray-800">Project Collaborations</h3>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              Have an exciting project in mind? Email me at <span className="font-semibold">aaggar68@uwo.ca</span> or call <span className="font-semibold">(647) 649-4667</span>.
+              Have a project in mind? Email me at <span className="font-semibold break-all">{profileLinks.email}</span> or call <span className="font-semibold">(647) 649-4667</span>. I'd love to hear what you're working on.
             </p>
             <Button
               className="w-full bg-red-500 hover:bg-red-600 text-white rounded-full py-3 text-lg font-semibold transition-all duration-300 hover:scale-105"
               onClick={() =>
-                window.open("mailto:aaggar68@uwo.ca?subject=Project Collaboration Opportunity", "_blank")
+                window.open(`mailto:${profileLinks.email}?subject=Project Collaboration`, "_blank")
               }
             >
               <Mail className="w-5 h-5 mr-2" />
@@ -113,7 +114,7 @@ export default function ContactSection() {
             </div>
             <h3 className="text-2xl font-bold mb-4 text-gray-800">Casual Coffee Chat</h3>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              No pitch needed — just good coffee and better brainstorming about tech, robotics, or weird ideas.
+              Let's compare notes on robotics, AI, prototype mishaps, or whatever you're curious about. Coffee is always a good starting point.
             </p>
             <Button
               className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-full py-3 text-lg font-semibold transition-all duration-300 hover:scale-105"
@@ -128,18 +129,18 @@ export default function ContactSection() {
         <div className="bg-black/60 backdrop-blur-md rounded-3xl p-8 mb-12 border border-white/30 shadow-2xl">
           <div className="flex items-center justify-center gap-3 mb-6">
             <Handshake className="w-8 h-8 text-white animate-pulse" />
-            <span className="text-2xl font-bold text-white">Ready to Start Something Amazing?</span>
+            <span className="text-2xl font-bold text-white">Have an idea or an opportunity?</span>
           </div>
           <p className="text-lg text-white/95 mb-8 max-w-2xl mx-auto text-pretty">
-            Whether it's a groundbreaking startup idea or just an interesting technical challenge, I'm always excited to
-            collaborate with passionate people.
+            Tell me about the problem, the team, or the prototype. I'm happy to discuss where my experience fits
+            and what we could build together.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Button
               size="lg"
               className="px-12 py-4 bg-white text-primary hover:bg-white/90 rounded-full text-xl font-bold transition-all duration-300 hover:scale-110 hover:shadow-2xl"
-              onClick={() => window.open("mailto:aaggar68@uwo.ca?subject=Let's Build Something Amazing!", "_blank")}
+              onClick={() => window.open(`mailto:${profileLinks.email}?subject=Let%27s%20connect`, "_blank")}
             >
               <MessageCircle className="w-6 h-6 mr-3" />
               Let's Chat!
@@ -150,8 +151,8 @@ export default function ContactSection() {
               className="px-12 py-4 border-2 border-white text-white hover:bg-white hover:text-primary rounded-full text-xl font-bold transition-all duration-300 hover:scale-110 hover:shadow-2xl bg-black/20 backdrop-blur-sm"
               onClick={() => {
                 const link = document.createElement("a")
-                link.href = "/Anurag's Resume.pdf"
-                link.download = "Anurag's Resume.pdf"
+                link.href = "/Anurag's_Resume.pdf"
+                link.download = "Anurag's_Resume.pdf"
                 link.click()
               }}
             >
@@ -160,7 +161,7 @@ export default function ContactSection() {
           </div>
         </div>
 
-        <p className="text-lg text-white/80 font-medium">Can't wait to hear from you — ping me anytime!</p>
+        <p className="text-lg text-white/80 font-medium">The best way to reach me is by email or LinkedIn.</p>
         </div>
       </div>
     </section>

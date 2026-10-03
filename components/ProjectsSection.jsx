@@ -2,39 +2,13 @@
 
 import Image from "next/image"
 import { useState } from "react"
+import { Brain, Bot, Database, Activity } from "lucide-react"
+import { projects } from "@/lib/portfolio"
+
+const projectIcons = { vision: Brain, robot: Bot, database: Database, data: Activity }
 
 export default function ProjectsSection() {
   const [currentProjectSet, setCurrentProjectSet] = useState(0)
-  
-  const projects = [
-    {
-      title: "Plant Disease Classifier",
-      description:
-        "Built a custom CNN to classify 38 plant leaf diseases across 87,000+ images; deployed an optimized model on Raspberry Pi for edge-based greenhouse-style inference.",
-      tech: ["Python", "TensorFlow", "CNN", "Computer Vision", "Raspberry Pi"],
-      thumbnail: "/smart-greenhouse-automation-system.jpg",
-      timeSpan: "Sep – Dec. 2025",
-      showGithub: false,
-    },
-    {
-      title: "Servo Control Circuit Design",
-      description:
-        "Designed a portable PWM + voltage regulation circuit (LM317T + NE555) for stable servo control at 50 Hz, with timing calculations and failure analysis to reduce jitter.",
-      tech: ["Analog Electronics", "NE555", "LM317T", "PWM", "Circuit Design"],
-      thumbnail: "/bldc-motor-controller-circuit-board.jpg",
-      timeSpan: "Sep – Dec. 2025",
-      showGithub: false,
-    },
-    {
-      title: "Stock Analyzer",
-      description:
-        "Python-based CLI for equity analysis that integrates financial ratios, macro indicators, and sentiment; includes ETL + REST API ingestion for live data and backtesting-ready deployments.",
-      tech: ["Python", "REST APIs", "Docker", "Data Analysis", "Sentiment Analysis"],
-      thumbnail: "/stock-analyzer-dashboard.jpg",
-      github: "https://github.com/Aaggar68/Stock_Analyser.git",
-      timeSpan: "Mar – Apr. 2024",
-    },
-  ]
   
   // Chunk projects into sets (avoid empty pages)
   const chunkSize = 4
@@ -99,10 +73,10 @@ export default function ProjectsSection() {
       <div className="container flex-1 flex flex-col">
         <div className="my-auto">
           <h2 className="font-bold text-center mb-6 responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>
-            Projects & Pandemonium
+            Projects, prototypes & lessons learned.
           </h2>
           <p className="text-center mb-12 responsive-text leading-relaxed max-w-4xl mx-auto" style={{ color: "#f1f5f9", fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
-            A messy mix of prototypes, hacks, and demos — code, videos, and the glorious failures that taught me the most.
+            Computer vision, embedded robotics, electronics, and data pipelines — built through coursework, teamwork, and plenty of testing.
           </p>
           <div className="flex flex-col items-center gap-8">
             {/* Projects Grid */}
@@ -111,9 +85,11 @@ export default function ProjectsSection() {
                 ? "grid-cols-1 justify-center" 
                 : "grid-cols-1 sm:grid-cols-2"
             }`}>
-              {currentProjects.map((project, index) => (
+          {currentProjects.map((project) => {
+            const ProjectIcon = projectIcons[project.icon] || Brain
+            return (
             <div
-              key={index}
+              key={project.title}
               className="rounded-xl p-6 shadow-lg border transition-all duration-300 cursor-pointer hover:scale-105 w-full max-w-md relative"
               style={{
                 background: "rgba(0, 0, 0, 0.4)",
@@ -143,14 +119,36 @@ export default function ProjectsSection() {
                 </span>
               </div>
               
-              <div className="mb-4 rounded-lg overflow-hidden relative h-48">
-                <Image
-                  src={project.thumbnail || "/placeholder.svg"}
-                  alt={`${project.title} preview`}
+              <div className="mb-4 rounded-lg overflow-hidden relative h-48 bg-black/30">
+                {project.thumbnail ? <Image
+                  src={project.thumbnail}
+                  alt={`${project.title}: ${project.thumbnailCaption || "preview"}`}
                   fill
-                  className="object-cover transition-transform duration-300 hover:scale-110"
-                />
+                  sizes="(max-width: 639px) 90vw, 400px"
+                  className={`${project.thumbnailFit === "contain" ? "object-contain" : "object-cover"} transition-transform duration-300 hover:scale-105`}
+                /> : (
+                  <div className="h-full flex flex-col items-center justify-center gap-4 bg-white/5 text-white/80 text-center px-4">
+                    <ProjectIcon className="w-14 h-14" aria-hidden="true" />
+                    <span className="text-sm font-medium">{project.category}</span>
+                  </div>
+                )}
               </div>
+              {project.video && (
+                <details className="mb-4 text-white">
+                  <summary className="cursor-pointer text-sm text-center font-semibold rounded-lg border border-white/30 p-2 hover:bg-white/10">Watch prototype demo</summary>
+                  <video controls playsInline preload="none" className="mt-3 w-full h-72 rounded-lg bg-black" aria-label={`${project.title} prototype demo`}>
+                    <source src={project.video} type="video/mp4" />
+                    Your browser cannot play this video. <a href={project.video}>Open the prototype demo</a>.
+                  </video>
+                </details>
+              )}
+              {project.mediaLinks && (
+                <div className="flex flex-wrap justify-center gap-3 mb-4">
+                  {project.mediaLinks.map((media) => (
+                    <a key={media.href} href={media.href} target="_blank" rel="noopener noreferrer" className="text-sm text-cyan-200 underline underline-offset-4 hover:text-white">{media.label}</a>
+                  ))}
+                </div>
+              )}
               
               <p className="leading-relaxed text-center text-lg mb-4" style={{ color: "#ffffff" }}>
                 {project.description}
@@ -173,11 +171,12 @@ export default function ProjectsSection() {
               </div>
               
               <div className="text-center">
-                {project.showGithub !== false && (
+                {project.github && (
                   <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`View ${project.title} on GitHub`}
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 font-semibold text-sm"
                     style={{
                       background: "rgba(255, 255, 255, 0.1)",
@@ -193,7 +192,8 @@ export default function ProjectsSection() {
                 )}
               </div>
             </div>
-          ))}
+            )
+          })}
           </div>
           
           {/* Bottom scroll button */}

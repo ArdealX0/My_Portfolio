@@ -52,25 +52,25 @@ export default function AboutSection() {
       <div className="container flex-1 flex flex-col">
         <div className="my-auto">
           <h2 className="font-bold text-center mb-16 responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(2rem, 6vw, 3.75rem)' }}>
-          Maker. Mentor. Mess-up Expert
+          Maker, mentor, always learning.
           </h2>
           <div className="responsive-grid lg:grid-cols-2 items-stretch" style={{gap: 'clamp(2rem, 5vw, 5rem)'}}>
             <div className="space-y-16">
               <div className="space-y-16">
                   <p className="leading-relaxed font-bold responsive-text" style={{ color: "#ffffff", fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
-                    Hi — I'm Anurag. Curious maker, coffee-lover, and someone who prefers figuring things out with my hands (and a little chaos).
+                    Hi — I'm Anurag. I like figuring out how things work, building something from that understanding, and learning from the parts that don't quite work the first time.
                   </p>
                   
                   <p className="leading-relaxed responsive-text" style={{ color: "#f1f5f9", fontSize: 'clamp(1.125rem, 3vw, 1.875rem)' }}>
-                    I'm currently pursuing a BESc in Mechatronics and Artificial Intelligence Systems Engineering (Dual Degree) at the University of Western Ontario (Cumulative GPA: 3.9).
+                    I'm studying Mechatronics and Artificial Intelligence Systems Engineering in Western University's co-op honours program, with graduation planned for 2028. Before university, I completed a diploma in CNC operation and programming, working with FANUC machines, SolidWorks, and Mastercam.
                   </p>
                   
                   <p className="leading-relaxed responsive-text" style={{ color: "#f1f5f9", fontSize: 'clamp(1.125rem, 3vw, 1.875rem)' }}>
-                    I love turning rough sketches into working prototypes, running beginner-friendly workshops, and helping friends debug — the messy, hands-on part is my favorite. Outside the lab I recharge with good coffee, a quick workout, and decent sleep — it keeps me curious and calm.
+                    I'm currently a Software Quality Assurance Analyst Intern at Health | Santé and contribute to an interactive sensor glove at Tethos. My project focus is SpatialMind: exploring how a vision system can remember objects and understand changes over time. I've also coordinated beginner robotics workshops and helped classmates learn CAD — sharing the debugging process is part of what I enjoy about building.
                   </p>
                   
                   <p className="leading-relaxed responsive-text" style={{ color: "#f1f5f9", fontSize: 'clamp(1.125rem, 3vw, 1.875rem)' }}>
-                    Got a weird idea or want to trade failure stories over coffee? I'm in.
+                    Outside the lab, I recharge with coffee, a workout, and time with friends. If you're working on an interesting engineering problem or want to trade prototype stories, I'd love to hear about it.
                   </p>
               </div>
             </div>

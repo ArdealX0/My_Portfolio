@@ -4,14 +4,13 @@ import './globals.css'
 
 export const metadata = {
   title: 'Anurag Aggarwal - Portfolio',
-  description: 'Personal portfolio website',
+  description: 'Anurag Aggarwal, Mechatronics and AI engineering student at Western University and Software QA Analyst Intern at Health | Santé. Computer vision, robotics, automation, and data engineering. Seeking a summer 2027 internship.',
   icons: {
     icon: [
-      { url: '/FavIcon.png', sizes: 'any' },
-      { url: '/FavIcon.svg', type: 'image/svg+xml' }
+      { url: '/aa-logo.png', type: 'image/png' }
     ],
-    shortcut: '/FavIcon.png',
-    apple: '/FavIcon.svg',
+    shortcut: '/aa-logo.png',
+    apple: '/aa-logo.png',
   },
 }
 
@@ -28,9 +27,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5, user-scalable=yes" />
-        <link rel="icon" href="/FavIcon.svg" type="image/svg+xml" />
-        <link rel="shortcut icon" href="/FavIcon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/FavIcon.svg" />
+        <link rel="icon" href="/aa-logo.png" type="image/png" />
+        <link rel="shortcut icon" href="/aa-logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/aa-logo.png" />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         {children}
