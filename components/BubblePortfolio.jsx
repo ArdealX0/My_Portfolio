@@ -56,6 +56,8 @@ function BubbleField({ onOpen, paused, suspended, reducedMotion }) {
   const motionState = useRef({paused,suspended,reducedMotion})
   motionState.current = {paused,suspended,reducedMotion}
   const [dragging, setDragging] = useState(null)
+  const [popped, setPopped] = useState({})
+  const popTimers = useRef(new Set()), respawn = useRef(null)
   const all = [...sections, ...decorations]
 
   useEffect(() => {
@@ -80,7 +82,7 @@ function BubbleField({ onOpen, paused, suspended, reducedMotion }) {
         }
         const phase = i * 2.399 + .45
         const speed = (i < 5 ? .7 : 1.05) * (mobile ? .7 : 1)
-        return { x,y,r:size/2,vx:Math.cos(phase)*speed,vy:Math.sin(phase)*speed,phase,speed,fixed:false }
+        return { x,y,r:size/2,vx:Math.cos(phase)*speed,vy:Math.sin(phase)*speed,phase,speed,fixed:false,inactive:simulation.current[i]?.inactive || false }
       })
       const text = hero.current.getBoundingClientRect()
       obstacle = mobile ? null : {left:text.left-rect.left-6,right:text.right-rect.left+6,top:text.top-rect.top-8,bottom:text.bottom-rect.top+8}
@@ -88,6 +90,21 @@ function BubbleField({ onOpen, paused, suspended, reducedMotion }) {
       draw()
     }
     layout()
+    respawn.current = index => {
+      const node = simulation.current[index]
+      if (!node) return
+      // Find open water, away from the introduction and the other bubbles.
+      for (let attempt = 0; attempt < 80; attempt++) {
+        const x = node.r + 6 + Math.random() * Math.max(0, bounds.width - 2 * node.r - 12)
+        const y = node.r + 6 + Math.random() * Math.max(0, bounds.height - 2 * node.r - 12)
+        if (obstacle && x + node.r + 10 > obstacle.left && x - node.r - 10 < obstacle.right && y + node.r + 10 > obstacle.top && y - node.r - 10 < obstacle.bottom) continue
+        if (simulation.current.some((other, j) => j !== index && !other.inactive && Math.hypot(x - other.x, y - other.y) < node.r + other.r + 8)) continue
+        node.x = x; node.y = y
+        break
+      }
+      node.inactive = false
+      draw()
+    }
     const observer = new ResizeObserver(layout)
     observer.observe(root)
     const animate = (now) => {
@@ -96,16 +113,37 @@ function BubbleField({ onOpen, paused, suspended, reducedMotion }) {
       const motion = motionState.current
       if (!document.hidden && !motion.paused && !motion.suspended && !motion.reducedMotion) {
         elapsed += dt
-        stepBubbles(simulation.current,bounds,dt,elapsed,obstacle)
+        stepBubbles(simulation.current.filter(node => !node.inactive),bounds,dt,elapsed,obstacle)
         draw()
       }
       frame = requestAnimationFrame(animate)
     }
     frame = requestAnimationFrame(animate)
-    return () => { cancelAnimationFrame(frame); observer.disconnect() }
+    return () => {
+      cancelAnimationFrame(frame); observer.disconnect()
+      popTimers.current.forEach(clearTimeout); popTimers.current.clear()
+      respawn.current = null
+    }
   // Palette changes don't reset the scene.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const popBubble = index => {
+    const node = simulation.current[index]
+    if (!node || node.inactive || popped[index]) return
+    node.inactive = true
+    node.fixed = false
+    setPopped(previous => ({...previous, [index]: "popping"}))
+    const schedule = (callback, delay) => {
+      const timer = setTimeout(() => { popTimers.current.delete(timer); callback() }, delay)
+      popTimers.current.add(timer)
+    }
+    schedule(() => {
+      respawn.current?.(index)
+      setPopped(previous => ({...previous, [index]: "regenerating"}))
+      schedule(() => setPopped(previous => ({...previous, [index]: null})), 450)
+    }, 1500)
+  }
 
   const release = () => {
     if (drag.current) {
@@ -122,13 +160,18 @@ function BubbleField({ onOpen, paused, suspended, reducedMotion }) {
         <h1>Anurag Aggarwal<span className="intro-period">.</span></h1>
         <p>Building things that sense,<br className="mobile-break" /> think, and move.</p>
         <a className="resume-link" href="/Anurag's_Resume.pdf" target="_blank" rel="noopener noreferrer"><FileText size={16} /> Resume <ArrowUpRight size={15} /></a>
-        <div className="explore-hint"><p>Pick a bubble to explore.</p><span>{paused||reducedMotion?"Take your time. Make yourself at home.":"A little curiosity goes a long way. Try a gentle drag."}</span></div>
+        <div className="explore-hint"><p>A little curiosity goes a long way.</p><span>Tap or drag a bubble to explore</span></div>
       </div>
       {all.map((item,i) => {
         const isSection = i < 5
         const Icon = item.icon
         const style = {left:0,top:0,"--bubble-colour":`var(--bubble-${item.colour})`}
-        if (!isSection) return <span key={`decoration-${i}`} ref={el=>elements.current[i]=el} className="bubble-orb bubble-decoration" style={style} aria-hidden="true" />
+        if (!isSection) return <button key={`decoration-${i}`} ref={el=>elements.current[i]=el} className={`bubble-decoration ${popped[i] || ""}`} style={style} type="button" aria-label={`Pop small bubble ${i - sections.length + 1}`} aria-disabled={Boolean(popped[i])}
+          onPointerEnter={() => { if (simulation.current[i]) simulation.current[i].fixed = true }}
+          onPointerLeave={() => { if (simulation.current[i]) simulation.current[i].fixed = false }}
+          onFocus={() => { if (simulation.current[i]) simulation.current[i].fixed = true }}
+          onBlur={() => { if (simulation.current[i]) simulation.current[i].fixed = false }}
+          onClick={() => popBubble(i)}><span className="bubble-orb bubble-small-surface" aria-hidden="true" /><span className="bubble-pop-ring" aria-hidden="true" /></button>
         return <button key={item.id} ref={el=>elements.current[i]=el} className={`bubble-orb bubble-button ${dragging===i ? "is-dragging" : ""}`} style={style}
           aria-label={`Explore ${item.label}`} aria-haspopup="dialog"
           onPointerEnter={()=>{ if (!drag.current && simulation.current[i]) simulation.current[i].fixed=true }}
