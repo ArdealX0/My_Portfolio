@@ -191,3 +191,9 @@
 .bubble-intro .explore-hint p {font-size:11px;line-height:1.5;letter-spacing:.06em;margin:0 0 5px;font-weight:500;color:var(--site-text);}
 .bubble-intro .explore-hint>span {display:block;font-size:10px;line-height:1.5;}
 @media (max-width:699px) {.bubble-home{padding-top:300px;}.bubble-intro{top:-288px;}}
+
+/* Gradients and bright rims keep the glass look without re-blurring every
+   moving bubble or stacking filters inside an already frosted panel. */
+.bubble-orb,.bubble-decoration,.liquid-cursor span,
+.portfolio-overlay,.project-card,.toolkit-card,.personal-note,
+.contact-options>a,.experience-body {backdrop-filter:none;-webkit-backdrop-filter:none;}

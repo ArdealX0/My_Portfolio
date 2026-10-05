@@ -54,22 +54,22 @@ void main() {
   }
   p += .08*vec2(sin(p.y*4.+t*.22),cos(p.x*3.-t*.18));
   float primary=caustics(p*1.1+vec2(t*.035,t*.018),t);
-  float detail=caustics(p*1.8+vec2(-t*.022,t*.013),-t*.7);
   float depth=.57+.19*sin(p.x*2.+p.y*1.5+t*.12);
   vec3 colour=mix(deepColour,shallowColour,depth);
-  colour+=lightColour*(primary*.58+pow(primary,5.)*.18+detail*.10+rippleLight);
+  colour+=lightColour*(primary*.58+pow(primary,5.)*.18+rippleLight);
   float shade=1.-.20*length(uv-.5);
   colour*=shade;
   gl_FragColor=vec4(colour,1.);
 }
 `
 
-export default function LiquidWater({ theme, paused, reducedMotion }) {
+export default function LiquidWater({ theme, paused, suspended, reducedMotion }) {
   const canvas = useRef(null)
   const cursor = useRef(null)
   const [mounted,setMounted] = useState(false)
-  const state = useRef({theme,paused,reducedMotion})
-  state.current = {theme,paused,reducedMotion}
+  const wake = useRef(null)
+  const state = useRef({theme,paused,suspended,reducedMotion})
+  state.current = {theme,paused,suspended,reducedMotion}
   useEffect(()=>{setMounted(true)},[])
 
   useEffect(() => {
@@ -97,7 +97,7 @@ export default function LiquidWater({ theme, paused, reducedMotion }) {
     const position=gl.getAttribLocation(program,"position")
     gl.enableVertexAttribArray(position);gl.vertexAttribPointer(position,2,gl.FLOAT,false,0,0)
     const uniforms=Object.fromEntries(["resolution","time","deepColour","shallowColour","lightColour","ripples[0]"].map(name=>[name,gl.getUniformLocation(program,name)]))
-    let frame, previous=0, elapsed=12, lastDraw=0, lastTheme, dirty=true
+    let frame=0, previous=0, elapsed=12, lastDraw=0, lastTheme, dirty=true
     const rippleData=new Float32Array(32)
     for(let i=0;i<8;i++) rippleData[i*4+2]=-100
     let rippleIndex=0, lastRippleAt=0, lastPointer=null
@@ -108,7 +108,7 @@ export default function LiquidWater({ theme, paused, reducedMotion }) {
       lastPointer=null
     }
     const addRipple=(event,strength)=>{
-      if(state.current.paused||state.current.reducedMotion||document.hidden) return
+      if(state.current.paused||state.current.suspended||state.current.reducedMotion||document.hidden) return
       const rect=surface.getBoundingClientRect(), offset=rippleIndex*4
       rippleData[offset]=(event.clientX-rect.left)/rect.width
       rippleData[offset+1]=1-(event.clientY-rect.top)/rect.height
@@ -144,18 +144,21 @@ export default function LiquidWater({ theme, paused, reducedMotion }) {
     document.documentElement.addEventListener("pointerleave",hideCursor)
     const resize=()=>{
       // Cap resolution to keep the moving background light on phones and GPUs.
-      const ratio=Math.min(1,1100/Math.max(surface.clientWidth,surface.clientHeight))
+      const limit=window.matchMedia("(max-width: 699px)").matches ? 640 : 900
+      const ratio=Math.min(1,limit/Math.max(surface.clientWidth,surface.clientHeight))
       surface.width=Math.max(1,Math.round(surface.clientWidth*ratio))
       surface.height=Math.max(1,Math.round(surface.clientHeight*ratio))
       gl.viewport(0,0,surface.width,surface.height)
       gl.uniform2f(uniforms.resolution,surface.width,surface.height)
       dirty=true
+      wake.current?.()
     }
     resize()
     const observer=new ResizeObserver(resize);observer.observe(surface)
     const draw=now=>{
+      frame=0
       const motion=state.current
-      const moving=!motion.paused&&!motion.reducedMotion&&!document.hidden
+      const moving=!motion.paused&&!motion.suspended&&!motion.reducedMotion&&!document.hidden
       if (moving && previous) elapsed+=Math.min((now-previous)/1000,.05)
       previous=now
       if (motion.theme!==lastTheme) {
@@ -167,11 +170,23 @@ export default function LiquidWater({ theme, paused, reducedMotion }) {
         gl.uniform1f(uniforms.time,elapsed);gl.uniform4fv(uniforms["ripples[0]"],rippleData);gl.drawArrays(gl.TRIANGLES,0,6)
         dirty=false;lastDraw=now
       }
-      frame=requestAnimationFrame(draw)
+      if(moving) frame=requestAnimationFrame(draw)
     }
-    frame=requestAnimationFrame(draw)
+    wake.current=()=>{
+      // Redraw changed colours or dimensions once, without keeping idle loops alive.
+      previous=0
+      if(!frame) frame=requestAnimationFrame(draw)
+    }
+    const visibility=()=>{
+      cancelAnimationFrame(frame);frame=0;previous=0
+      if(!document.hidden) wake.current?.()
+    }
+    document.addEventListener("visibilitychange",visibility)
+    wake.current()
     return ()=>{
       cancelAnimationFrame(frame);observer.disconnect()
+      document.removeEventListener("visibilitychange",visibility)
+      wake.current=null
       window.removeEventListener("pointermove",pointerMove)
       window.removeEventListener("pointerdown",pointerDown)
       window.removeEventListener("pointerup",pointerUp)
@@ -182,6 +197,7 @@ export default function LiquidWater({ theme, paused, reducedMotion }) {
       gl.deleteBuffer(buffer);gl.deleteProgram(program);shaders.forEach(s=>gl.deleteShader(s))
     }
   },[])
+  useEffect(()=>{wake.current?.()},[theme,paused,suspended,reducedMotion])
 
   return <><div className="liquid-water" aria-hidden="true"><canvas ref={canvas}/><div className="water-shade"/></div>{mounted&&createPortal(<div className="liquid-cursor" ref={cursor} aria-hidden="true" data-visible="false"><span/></div>,document.body)}</>
 }

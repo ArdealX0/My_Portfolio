@@ -7,6 +7,7 @@ import { Bot, Cpu, Cog, MessagesSquare, UserRound, ArrowUpRight, ArrowLeft, X, G
 import { projects, profileLinks } from "@/lib/portfolio"
 import { experiences } from "@/lib/experience"
 import { stepBubbles } from "@/lib/bubble-physics.mjs"
+import { imagePreview } from "@/lib/media"
 import "./bubble-portfolio.css"
 import LiquidWater from "./LiquidWater"
 
@@ -58,13 +59,18 @@ function BubbleField({ onOpen, paused, suspended, reducedMotion }) {
   const [dragging, setDragging] = useState(null)
   const [popped, setPopped] = useState({})
   const popTimers = useRef(new Set()), respawn = useRef(null)
+  const wake = useRef(null)
   const all = [...sections, ...decorations]
 
   useEffect(() => {
     const root = field.current
-    let frame, previous = 0, elapsed = 0, bounds, obstacle
+    let frame=0, previous = 0, elapsed = 0, bounds, obstacle
     const draw = () => simulation.current.forEach((node, i) => {
-      if (elements.current[i]) elements.current[i].style.transform = `translate3d(${node.x - node.r}px, ${node.y - node.r}px, 0)`
+      const transform = `translate3d(${node.x - node.r}px, ${node.y - node.r}px, 0)`
+      if (elements.current[i] && node.lastTransform !== transform) {
+        elements.current[i].style.transform = transform
+        node.lastTransform = transform
+      }
     })
     const layout = () => {
       const rect = root.getBoundingClientRect()
@@ -108,6 +114,7 @@ function BubbleField({ onOpen, paused, suspended, reducedMotion }) {
     const observer = new ResizeObserver(layout)
     observer.observe(root)
     const animate = (now) => {
+      frame=0
       const dt = previous ? Math.min((now-previous)/1000,.033) : 1/60
       previous = now
       const motion = motionState.current
@@ -115,18 +122,29 @@ function BubbleField({ onOpen, paused, suspended, reducedMotion }) {
         elapsed += dt
         stepBubbles(simulation.current.filter(node => !node.inactive),bounds,dt,elapsed,obstacle)
         draw()
+        frame = requestAnimationFrame(animate)
       }
-      frame = requestAnimationFrame(animate)
     }
-    frame = requestAnimationFrame(animate)
+    wake.current = () => {
+      previous=0
+      if (!frame && !document.hidden) frame=requestAnimationFrame(animate)
+    }
+    const visibility = () => {
+      cancelAnimationFrame(frame);frame=0;previous=0
+      if (!document.hidden) wake.current?.()
+    }
+    document.addEventListener("visibilitychange",visibility)
+    wake.current()
     return () => {
       cancelAnimationFrame(frame); observer.disconnect()
+      document.removeEventListener("visibilitychange",visibility);wake.current=null
       popTimers.current.forEach(clearTimeout); popTimers.current.clear()
       respawn.current = null
     }
   // Palette changes don't reset the scene.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  useEffect(() => {wake.current?.()}, [paused,suspended,reducedMotion])
 
   const popBubble = index => {
     const node = simulation.current[index]
@@ -224,9 +242,9 @@ function AboutContent() {
       <div className="personal-note"><Coffee size={22}/><p>Outside the lab: coffee, a workout, and time with friends. Always up for trading prototype stories.</p></div>
     </div>
     <div className="photo-journal">
-      <div className="portrait"><Image src="/ProfilePic.jpg" alt="Anurag Aggarwal" width={600} height={700} className="portrait-image" /></div>
+      <div className="portrait"><Image src={imagePreview("/ProfilePic.jpg")} alt="Anurag Aggarwal" width={600} height={700} className="portrait-image" /></div>
       <p className="small-note">A little life outside the lab.</p>
-      <div className="life-photos">{photos.map(([src,alt])=><a key={src} href={src} target="_blank" rel="noopener noreferrer" aria-label={`Open photo: ${alt}`}><Image src={src} alt={alt} width={300} height={300}/></a>)}</div>
+      <div className="life-photos">{photos.map(([src,alt])=><a key={src} href={src} target="_blank" rel="noopener noreferrer" aria-label={`Open photo: ${alt}`}><Image src={imagePreview(src)} alt={alt} width={300} height={300}/></a>)}</div>
     </div>
   </div>
 }
@@ -240,7 +258,7 @@ function ProjectsContent() {
     <div className="filter-row" role="group" aria-label="Filter projects">{["All",...groups].map(f=><button key={f} aria-pressed={filter===f} onClick={()=>setFilter(f)}>{f}{f==="All"&&<span>{projects.length}</span>}</button>)}</div>
     <div className="project-grid">{visible.map(project=><article className="project-card" key={project.title}>
       <div className={`project-image ${project.thumbnailFit==="contain"?"contain":""} ${project.thumbnailRotate?"rotated":""}`}>
-        {project.thumbnail ? <Image src={project.thumbnail} alt={`${project.title}: ${project.thumbnailCaption||"preview"}`} width={700} height={460} style={{objectPosition:project.thumbnailPosition||"50% 50%"}} sizes="(max-width: 700px) 90vw, 500px" /> : <div className="project-placeholder"><Activity strokeWidth={1}/><span>Healthcare data & machine learning</span></div>}
+        {project.thumbnail ? <Image src={imagePreview(project.thumbnail)} alt={`${project.title}: ${project.thumbnailCaption||"preview"}`} width={700} height={460} style={{objectPosition:project.thumbnailPosition||"50% 50%"}} sizes="(max-width: 700px) 90vw, 500px" /> : <div className="project-placeholder"><Activity strokeWidth={1}/><span>Healthcare data & machine learning</span></div>}
       </div>
       <div className="project-body"><div className="project-meta"><span>{project.group}</span><span>{project.timeSpan}</span></div><h3>{project.title}</h3><p>{project.description}</p>
         <div className="skill-tags">{project.tech.map(tech=><span key={tech}>{tech}</span>)}</div>
@@ -284,9 +302,9 @@ export default function BubblePortfolio() {
   const close=()=>{setActive(null);window.history.replaceState(null,"",window.location.pathname+window.location.search)}
   const ActiveContent=content[active]
   return <div className="bubble-site" data-theme={theme}>
-    <LiquidWater theme={theme} paused={paused} reducedMotion={reducedMotion}/>
+    <LiquidWater theme={theme} paused={paused} suspended={!!active} reducedMotion={reducedMotion}/>
     <a className="skip-link" href="#quick-navigation">Skip to navigation</a>
-    <header className="bubble-header"><a className="brand" href="#" aria-label="Anurag Aggarwal home" onClick={e=>{e.preventDefault();close()}}><Image src="/aa-logo.png" alt="" width={46} height={46}/><span>ANURAG<span>AGGARWAL</span></span></a><div className="header-tools"><span className="availability"><i/> OPEN FOR SUMMER 2027</span><button className="icon-control" aria-label="Choose colour scheme" aria-expanded={paletteOpen} onClick={()=>setPaletteOpen(!paletteOpen)}><Palette size={19}/></button><button className="icon-control" aria-label={paused||reducedMotion?"Resume motion":"Pause motion"} aria-pressed={paused||reducedMotion} disabled={reducedMotion} title={reducedMotion?"Motion reduced to match your device preference":undefined} onClick={()=>setPaused(!paused)}>{paused||reducedMotion?<Play size={17}/>:<Pause size={17}/>}</button></div></header>
+    <header className="bubble-header"><a className="brand" href="#" aria-label="Anurag Aggarwal home" onClick={e=>{e.preventDefault();close()}}><Image src={imagePreview("/aa-logo.png")} alt="" width={46} height={46}/><span>ANURAG<span>AGGARWAL</span></span></a><div className="header-tools"><span className="availability"><i/> OPEN FOR SUMMER 2027</span><button className="icon-control" aria-label="Choose colour scheme" aria-expanded={paletteOpen} onClick={()=>setPaletteOpen(!paletteOpen)}><Palette size={19}/></button><button className="icon-control" aria-label={paused||reducedMotion?"Resume motion":"Pause motion"} aria-pressed={paused||reducedMotion} disabled={reducedMotion} title={reducedMotion?"Motion reduced to match your device preference":undefined} onClick={()=>setPaused(!paused)}>{paused||reducedMotion?<Play size={17}/>:<Pause size={17}/>}</button></div></header>
     {paletteOpen&&<div className="palette-picker"><div className="palette-picker-title"><span>Make yourself at home.</span><button aria-label="Close colour choices" onClick={()=>setPaletteOpen(false)}><X size={16}/></button></div>{palettes.map(p=><button key={p.id} aria-pressed={theme===p.id} onClick={()=>selectTheme(p.id)}><span className="palette-swatches">{p.colours.map(c=><i key={c} style={{background:c}}/>)}</span><span>{p.name}</span>{theme===p.id&&<Check size={16}/>}</button>)}</div>}
     <main className="bubble-home"><BubbleField onOpen={open} paused={paused} suspended={!!active} reducedMotion={reducedMotion}/></main>
     <footer className="bubble-footer"><span>© {new Date().getFullYear()} Anurag Aggarwal</span><nav id="quick-navigation" aria-label="Quick portfolio navigation">{navigationSections.map(section=><button key={section.id} onClick={e=>open(section.id,e.currentTarget)}>{section.label}</button>)}</nav><a href={`mailto:${profileLinks.email}`} aria-label="Email Anurag"><Mail size={17}/></a></footer>
